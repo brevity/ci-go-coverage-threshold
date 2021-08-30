@@ -1,0 +1,17 @@
+---
+# action.yml
+name: Go Coverage Threshold
+description: Check if Test Coverage Meets threshold
+inputs:
+  threshold:
+    description: Coverage Threshold to meet
+    required: true
+    default: 80
+outputs:
+  coverage:
+    description: The actual coverage percentage
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+    - ${{ inputs.threshold }}
