@@ -1,12 +1,14 @@
-#!/bin/sh -l
+#!/usr/bin/env bash
+
+/usr/local/go/bin/go test ./... -coverprofile=cover.out #&>/dev/null
 
 threshold=$1
 total=$(
-  go tool cover -func=cover.out \
+  /usr/local/go/bin/go tool cover -func=cover.out \
   | tail -n1 \
   | awk '{split($3,x,".");print x[1] "%"}'|sed 's/\%//'
 )
-echo "::set-output name=coverage::$coverage"
+echo "::set-output name=coverage::$total"
 if [[ $total -lt $threshold ]]; then
   echo "FAIL: Total coverage $total% does NOT meet threshold of $threshold%"
   exit 1
